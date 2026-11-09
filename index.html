@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pincho Facturación · Programa de facturación para Windows</title>
+  <meta name="description" content="Pincho Facturación: programa de facturación para Windows con facturas, albaranes, presupuestos, clientes, cobros, compras, almacén e informes, preparado para VERI*FACTU.">
+  <meta name="theme-color" content="#16294f">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pincho Facturación">
+  <meta property="og:description" content="Facturación y gestión comercial para pymes y autónomos, preparada para VERI*FACTU.">
+  <meta property="og:url" content="https://pinchofacturacion.es/">
+  <meta property="og:image" content="https://pinchofacturacion.es/img/capturas/factura-claro-1600.webp">
+  <link rel="canonical" href="https://pinchofacturacion.es/">
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<div class="aviso-desarrollo">
+  Pincho Facturación está en desarrollo. Si quieres probarlo antes que nadie, <a href="#contacto">escríbenos</a>.
+</div>
+
+<header class="barra">
+  <div class="contenedor">
+    <a class="marca" href="#">
+      <img src="img/logo-180.webp" alt="" width="42" height="42">
+      <span>Pincho Facturación</span>
+    </a>
+    <button class="boton-menu" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <nav aria-label="Principal">
+      <ul class="menu" id="menu">
+        <li><a href="#incluye">Qué incluye</a></li>
+        <li><a href="#pantallas">Pantallas</a></li>
+        <li><a href="#verifactu">VERI*FACTU</a></li>
+        <li><a href="#preguntas">Preguntas</a></li>
+        <li><a class="boton boton-principal" href="#contacto">Pedir una demostración</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ PORTADA: el programa tal cual es ============ -->
+<section class="portada">
+  <div class="contenedor">
+    <div class="portada-texto">
+      <h1>Facturar sin pelearte con el programa</h1>
+      <p class="entradilla">Pincho Facturación lleva tus facturas, albaranes, presupuestos, clientes, cobros y compras en un solo programa para Windows. Está pensado para que cualquiera en la oficina lo entienda a la primera, y ya viene preparado para VERI*FACTU.</p>
+      <div class="acciones">
+        <a class="boton boton-principal" href="#contacto">Pedir una demostración</a>
+        <a class="enlace" href="#pantallas">Ver más pantallas</a>
+      </div>
+    </div>
+
+    <div class="escaparate">
+      <div class="escaparate-cabecera">
+        <div class="interruptor" role="group" aria-label="Tema del programa">
+          <span>Tema del programa</span>
+          <span class="interruptor-botones">
+            <button type="button" data-tema="claro" aria-pressed="true">Claro</button>
+            <button type="button" data-tema="oscuro" aria-pressed="false">Oscuro</button>
+          </span>
+        </div>
+      </div>
+      <div class="ventana">
+        <img data-tema="claro" src="img/capturas/factura-claro-1600.webp"
+             srcset="img/capturas/factura-claro-960.webp 960w, img/capturas/factura-claro-1600.webp 1600w, img/capturas/factura-claro-2400.webp 2400w"
+             sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860"
+             alt="Pantalla de una factura en borrador en Pincho Facturación: cliente, forma de pago, líneas y total a pagar">
+        <img data-tema="oscuro" class="apagada" src="img/capturas/factura-oscuro-1600.webp"
+             srcset="img/capturas/factura-oscuro-960.webp 960w, img/capturas/factura-oscuro-1600.webp 1600w, img/capturas/factura-oscuro-2400.webp 2400w"
+             sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860" loading="lazy"
+             alt="La misma factura con el tema oscuro del programa">
+      </div>
+      <p class="pie-captura">Una factura en borrador. Se puede cambiar hasta que se emite. Captura real del programa con datos de ejemplo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUÉ INCLUYE: presentado como las líneas de una factura ============ -->
+<section class="seccion" id="incluye">
+  <div class="contenedor">
+    <div class="cabecera">
+      <h2>Qué incluye</h2>
+      <p class="entradilla">Todo lo que necesita una pyme o un autónomo para el día a día, desde el primer presupuesto hasta el último cobro.</p>
+    </div>
+
+    <table class="lineas-factura">
+      <thead><tr><th scope="col">Concepto</th><th scope="col">Detalle</th></tr></thead>
+      <tbody>
+        <tr><td>Facturas, albaranes y presupuestos</td><td>Borradores que puedes retomar, plantillas, duplicar, facturas rectificativas y pasar un presupuesto o varios albaranes a factura. Recargo de equivalencia, IRPF y descuentos.</td></tr>
+        <tr><td>VERI*FACTU</td><td>Código QR y huella en cada factura, comunicación con la Agencia Tributaria y el estado de cada envío a la vista.</td></tr>
+        <tr><td>Clientes</td><td>Ficha con lo facturado y lo pendiente, histórico de compras, direcciones de envío, documentos, mapa y comprobación del NIF con la AEAT.</td></tr>
+        <tr><td>Cobros, pagos y bancos</td><td>Recibos y vencimientos según la forma de pago o a tu medida, anticipos, movimientos bancarios y aviso de lo vencido nada más abrir.</td></tr>
+        <tr><td>Artículos y almacén</td><td>Familias, tarifas, códigos de barras, entradas de almacén y seguimiento de cada artículo.</td></tr>
+        <tr><td>Compras y gastos</td><td>Las facturas de tus proveedores con su IVA, para saber siempre cuánto gastas y en qué.</td></tr>
+        <tr><td>Informes</td><td>Libro de IVA, modelo 347, extractos de clientes y proveedores, balances y resúmenes de facturas, cobros y vencimientos.</td></tr>
+        <tr><td>Envío de documentos</td><td>Facturas y presupuestos por correo electrónico o WhatsApp desde la vista previa. Facturas también en inglés y francés.</td></tr>
+        <tr><td>Comodidad</td><td>Dictado por voz, atajos de teclado, tema claro u oscuro, menús a la medida de cada usuario y aviso de quién llama.</td></tr>
+      </tbody>
+    </table>
+    <div class="total-factura"><span>TOTAL</span><strong>Más de 600 funciones</strong></div>
+  </div>
+</section>
+
+<!-- ============ PANTALLAS REALES ============ -->
+<section class="seccion seccion-niebla" id="pantallas">
+  <div class="contenedor">
+    <div class="cabecera">
+      <h2>Pantallas del programa</h2>
+      <p class="entradilla">Así es Pincho Facturación por dentro. Pulsa en una imagen para verla a tamaño completo.</p>
+    </div>
+
+    <div class="pestanas" role="tablist" aria-label="Pantallas">
+      <button class="pestana" role="tab" id="t-inicio" aria-selected="true" aria-controls="p-inicio">Inicio</button>
+      <button class="pestana" role="tab" id="t-facturas" aria-selected="false" aria-controls="p-facturas" tabindex="-1">Lista de facturas</button>
+      <button class="pestana" role="tab" id="t-oscuro" aria-selected="false" aria-controls="p-oscuro" tabindex="-1">Tema oscuro</button>
+    </div>
+
+    <figure class="panel activo" id="p-inicio" role="tabpanel" aria-labelledby="t-inicio">
+      <a class="ventana" href="img/capturas/inicio-2400.webp" target="_blank" rel="noopener">
+        <img src="img/capturas/inicio-1600.webp" srcset="img/capturas/inicio-960.webp 960w, img/capturas/inicio-1600.webp 1600w" sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860" loading="lazy"
+             alt="Pantalla de inicio con lo facturado en el mes y en el año, lo pendiente de cobro, el gráfico por meses, los recibos vencidos y los atajos">
+      </a>
+      <figcaption>
+        <h3>Tu negocio de un vistazo</h3>
+        <p>Al abrir el programa ves lo facturado este mes y este año, lo que te deben, los recibos vencidos y la evolución por meses. Desde los atajos llegas a cada parte con un clic o con su tecla.</p>
+      </figcaption>
+    </figure>
+
+    <figure class="panel" id="p-facturas" role="tabpanel" aria-labelledby="t-facturas" hidden>
+      <a class="ventana" href="img/capturas/facturas-2400.webp" target="_blank" rel="noopener">
+        <img src="img/capturas/facturas-1600.webp" srcset="img/capturas/facturas-960.webp 960w, img/capturas/facturas-1600.webp 1600w" sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860" loading="lazy"
+             alt="Lista de facturas del ejercicio con borradores, facturas emitidas, rectificativas y sustituidas">
+      </a>
+      <figcaption>
+        <h3>Todas las facturas del año</h3>
+        <p>Borradores, facturas emitidas, rectificativas y sustituidas, cada una con su color. Busca por número, cliente o estado, filtra cualquier columna y emite o rectifica desde la misma pantalla.</p>
+      </figcaption>
+    </figure>
+
+    <figure class="panel" id="p-oscuro" role="tabpanel" aria-labelledby="t-oscuro" hidden>
+      <a class="ventana" href="img/capturas/factura-oscuro-2400.webp" target="_blank" rel="noopener">
+        <img src="img/capturas/factura-oscuro-1600.webp" srcset="img/capturas/factura-oscuro-960.webp 960w, img/capturas/factura-oscuro-1600.webp 1600w" sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860" loading="lazy"
+             alt="Ficha de una factura con el tema oscuro">
+      </a>
+      <figcaption>
+        <h3>Claro u oscuro, a tu gusto</h3>
+        <p>Cada usuario elige el aspecto y los colores del programa. El tema oscuro cansa menos la vista cuando pasas muchas horas delante de la pantalla.</p>
+      </figcaption>
+    </figure>
+
+    <p class="nota">Capturas reales del programa. Los nombres, NIF y cuentas son de ejemplo.</p>
+  </div>
+</section>
+
+<!-- ============ VERI*FACTU ============ -->
+<section class="seccion" id="verifactu">
+  <div class="contenedor dos-columnas">
+    <div>
+      <h2>VERI*FACTU, resuelto</h2>
+      <p class="entradilla" style="margin-top:16px">La Ley Antifraude obliga a que los programas de facturación garanticen que una factura no se modifica después de emitirla y que cualquiera puede comprobarla. Pincho Facturación lo hace sin pasos de más.</p>
+      <ul class="marcas">
+        <li>Cada factura lleva su código QR para que tu cliente la compruebe en la web de Hacienda.</li>
+        <li>Una huella encadenada asegura que nada cambia después de emitir.</li>
+        <li>El envío a la Agencia Tributaria se hace solo, en segundo plano.</li>
+        <li>Ves el estado de cada factura: enviada, pendiente o con algún aviso.</li>
+      </ul>
+    </div>
+    <div class="papel-factura" role="img" aria-label="Ejemplo de factura con su código QR de VERI*FACTU">
+      <header>
+        <div>
+          <div class="tipo">FACTURA FAC-128</div>
+          <div class="datos">9 de noviembre de 2026<br>Distribuciones Levante S. L.</div>
+        </div>
+        <div class="qr"><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i></i><i></i><i class="b"></i><i class="b"></i><i class="b"></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i><i></i><i></i><i class="b"></i><i></i><i class="b"></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i></i><i></i><i class="b"></i><i></i><i></i><i></i><i></i><i></i><i class="b"></i><i class="b"></i><i></i><i class="b"></i><i class="b"></i><i class="b"></i><i></i><i></i><i></i><i class="b"></i><i></i><i class="b"></i><i></i><i></i><i class="b"></i></div>
+      </header>
+      <table>
+        <tr><td>Mantenimiento anual</td><td>240,00 €</td></tr>
+        <tr><td>Horas de formación (3)</td><td>105,00 €</td></tr>
+        <tr><td>IVA 21 %</td><td>72,45 €</td></tr>
+      </table>
+      <div class="total">
+        <span class="vf">Factura verificable en la sede electrónica de la AEAT</span>
+        <b>TOTAL<em>417,45 €</em></b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CÓMO EMPEZAR ============ -->
+<section class="seccion seccion-niebla" id="como-empezar">
+  <div class="contenedor">
+    <div class="cabecera">
+      <h2>Cómo empezar</h2>
+      <p class="entradilla">Te acompañamos desde el primer día, también si vienes de otro programa.</p>
+    </div>
+    <ol class="pasos">
+      <li><h3>Hablamos</h3><p>Nos cuentas cómo trabajas y te enseñamos el programa con ejemplos de tu sector.</p></li>
+      <li><h3>Lo instalamos</h3><p>En tu ordenador o en los de la oficina, con los datos de tu empresa, tus series y tu logotipo.</p></li>
+      <li><h3>Pasamos tus datos</h3><p>Clientes, artículos y proveedores desde tu programa anterior, para seguir sin perder nada.</p></li>
+      <li><h3>Seguimos contigo</h3><p>Asistencia remota cuando la necesites, copias de seguridad y actualizaciones automáticas.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ PREGUNTAS ============ -->
+<section class="seccion" id="preguntas">
+  <div class="contenedor">
+    <div class="cabecera"><h2>Preguntas frecuentes</h2></div>
+    <div class="preguntas">
+      <details><summary>¿En qué ordenadores funciona?</summary><p>En ordenadores con Windows 10 o Windows 11. Puede trabajar en un solo equipo o en varios a la vez dentro de la oficina, compartiendo los mismos datos.</p></details>
+      <details><summary>¿Cumple con VERI*FACTU y la Ley Antifraude?</summary><p>Sí. Las facturas llevan su código QR y su huella, y se comunican a la Agencia Tributaria automáticamente.</p></details>
+      <details><summary>¿Puedo traer los datos de mi programa actual?</summary><p>Sí. Estudiamos tu caso y pasamos clientes, proveedores, artículos y, si se puede, el histórico de facturas.</p></details>
+      <details><summary>¿Qué pasa si tengo un problema?</summary><p>Te atendemos por teléfono o por correo y, si hace falta, nos conectamos a tu ordenador en remoto, siempre con tu permiso, para resolverlo al momento.</p></details>
+      <details><summary>¿Se adapta a mi sector?</summary><p>Tiene modos especiales para algunos sectores, como la fabricación de calzado, y forma parte de la familia de programas Pincho, con programas para TPV, talleres y más.</p></details>
+      <details><summary>¿Está ya disponible?</summary><p>Está en la fase final de desarrollo. Si te interesa, escríbenos y te avisamos para que seas de los primeros en probarlo.</p></details>
+    </div>
+
+    <div style="margin-top:72px">
+      <h3 style="margin-bottom:16px">Otros programas de la familia Pincho</h3>
+      <!-- Cuando cada programa tenga su web, cambia aquí su enlace -->
+      <ul class="familia">
+        <li class="actual">Facturación</li>
+        <li><a href="https://pinchotpv.es">TPV</a></li>
+        <li><a href="https://pinchotalleres.es">Talleres</a></li>
+        <li><a href="https://octaviogarciaorts.es">Agenda</a></li>
+        <li><a href="https://octaviogarciaorts.es">Almacén</a></li>
+        <li><a href="https://octaviogarciaorts.es">Calzado</a></li>
+        <li><a href="https://octaviogarciaorts.es">Envases</a></li>
+        <li><a href="https://octaviogarciaorts.es">Residuos</a></li>
+        <li><a href="https://octaviogarciaorts.es">Control horario</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACTO ============ -->
+<section class="seccion contacto" id="contacto">
+  <div class="contenedor dos-columnas">
+    <div>
+      <h2>¿Lo vemos juntos?</h2>
+      <p class="entradilla">Cuéntanos a qué se dedica tu empresa y te enseñamos el programa sin compromiso.</p>
+      <p class="datos-contacto">
+        <a href="mailto:correo@octaviogarciaorts.es">correo@octaviogarciaorts.es</a><br>
+        <a href="https://octaviogarciaorts.es">octaviogarciaorts.es</a>
+      </p>
+    </div>
+    <form class="formulario" id="formulario-contacto" data-correo="correo@octaviogarciaorts.es">
+      <div class="fila">
+        <label>Nombre<input name="nombre" required autocomplete="name"></label>
+        <label>Empresa<input name="empresa" autocomplete="organization"></label>
+      </div>
+      <div class="fila">
+        <label>Teléfono<input name="telefono" type="tel" autocomplete="tel"></label>
+        <label>Motivo
+          <select name="motivo"><option>Quiero una demostración</option><option>Quiero probarlo</option><option>Pedir presupuesto</option><option>Otra consulta</option></select>
+        </label>
+      </div>
+      <label>Mensaje<textarea name="mensaje" rows="4"></textarea></label>
+      <button class="boton boton-naranja" type="submit">Preparar el correo</button>
+      <p class="letra-pequena">Se abrirá tu programa de correo con el mensaje escrito para que lo envíes. Más información en la <a href="privacidad.html">política de privacidad</a>.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <div>© <span id="anio">2026</span> Octavio García Orts</div>
+    <nav aria-label="Legal">
+      <a href="https://octaviogarciaorts.es">octaviogarciaorts.es</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="privacidad.html">Privacidad</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="js/principal.js"></script>
+</body>
+</html>
