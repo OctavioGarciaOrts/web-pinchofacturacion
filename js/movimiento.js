@@ -175,7 +175,7 @@
   function iniciarPantalla(app) {
     var $ = function (s) { return app.querySelector(s); };
     var $$ = function (s) { return Array.prototype.slice.call(app.querySelectorAll(s)); };
-    var MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+    var MESES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic'];
     var MESES_LARGOS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 
@@ -221,11 +221,11 @@
     var nRefran = hoy.getDate() % REFRANES.length, textoRefran = $('[data-refran-texto]'), relojRefran;
     function ponerRefran(paso) {
       nRefran = (nRefran + paso + REFRANES.length) % REFRANES.length;
-      if (quieto) { textoRefran.textContent = REFRANES[nRefran]; return; }
+      if (quieto) { textoRefran.textContent = '«' + REFRANES[nRefran] + '»'; return; }
       textoRefran.classList.add('cambiando');
-      setTimeout(function () { textoRefran.textContent = REFRANES[nRefran]; textoRefran.classList.remove('cambiando'); }, 250);
+      setTimeout(function () { textoRefran.textContent = '«' + REFRANES[nRefran] + '»'; textoRefran.classList.remove('cambiando'); }, 250);
     }
-    textoRefran.textContent = REFRANES[nRefran];
+    textoRefran.textContent = '«' + REFRANES[nRefran] + '»';
     $$('[data-refran]').forEach(function (b) {
       b.addEventListener('click', function () { ponerRefran(+b.getAttribute('data-refran')); clearInterval(relojRefran); relojRefran = setInterval(function () { ponerRefran(1); }, 9000); });
     });
@@ -246,9 +246,13 @@
       da.className = 't-detalle ' + (va.bien ? 'bien' : 'mal');
       contar($('[data-valor="mes"]'), datos.mes * k, 2, ' €', desdeCero);
       contar($('[data-valor="ano"]'), datos.ano * k, 2, ' €', desdeCero);
+      $('[data-detalle="albaranes"]').textContent = eur(2140 * k) + ' · ' + iva;
+      $('[data-detalle="compras"]').textContent = '14 documentos · ' + eur(3512.90) + ' el mismo mes de ' + (anio - 1);
       if (desdeCero) {
         contar($('[data-valor="pendiente"]'), 31245.80, 2, ' €', true);
         contar($('[data-valor="borradores"]'), 3, 0, '', true);
+        contar($('[data-valor="albaranes"]'), 5, 0, '', true);
+        contar($('[data-valor="compras"]'), 3870.25, 2, ' €', true);
       }
     }
 
@@ -269,9 +273,12 @@
       svg.setAttribute('class', 'grafico-svg' + (animar && !quieto ? ' animar' : ''));
       var k = conIva ? 1.21 : 1;
       var series = [[anterior, 's-ant', anio - 1], [actual, 's-act', anio]];
-      var maximo = Math.max.apply(null, anterior.concat(actual)) * k;
-      var paso = H < 170 ? 10000 : 5000, tope = Math.ceil(maximo * 1.04 / paso) * paso;
-      var izq = W < 420 ? 56 : 60, der = 8, arr = 8, aba = 22, an = W - izq - der, al = H - arr - aba;
+      var apiladas = tipo === 'apiladas';
+      var maximo = (apiladas ? Math.max.apply(null, anterior.map(function (v, i) { return v + actual[i]; })) : Math.max.apply(null, anterior.concat(actual))) * k;
+      var paso = maximo > 30000 ? 10000 : 5000;
+      if (H < 170) paso *= 2;
+      var tope = Math.ceil(maximo * 1.04 / paso) * paso;
+      var izq = W < 420 ? 56 : 62, der = 10, arr = 24, aba = 20, an = W - izq - der, al = H - arr - aba;
       var y = function (v) { return arr + al - v / tope * al; };
       for (var v = 0; v <= tope; v += paso) {
         nodo('line', { x1: izq, x2: W - der, y1: y(v), y2: y(v), 'class': 'rejilla' }, svg);
@@ -282,7 +289,16 @@
         if (W < 420 && i % 2) return;
         nodo('text', { x: izq + col * i + col / 2, y: H - 6, 'text-anchor': 'middle' }, svg, m);
       });
-      if (tipo === 'barras') {
+      if (apiladas) {
+        var anchoA = Math.max(4, Math.min(26, col * 0.5));
+        anterior.forEach(function (va, i) {
+          var a1 = va * k, a2 = actual[i] * k, x = izq + col * i + col / 2 - anchoA / 2;
+          [[0, a1, 's-ant', anio - 1, a1], [a1, a1 + a2, 's-act', anio, a2]].forEach(function (b, j) {
+            var r = nodo('rect', { x: x.toFixed(1), y: y(b[1]).toFixed(1), width: anchoA.toFixed(1), height: Math.max(0, y(b[0]) - y(b[1])).toFixed(1), 'class': 'barra ' + b[2], style: '--i:' + (i + j * 2) }, svg);
+            nodo('title', {}, r, b[3] + ' · ' + MESES[i] + ': ' + eur(b[4]));
+          });
+        });
+      } else if (tipo === 'barras') {
         var ancho = Math.max(3, Math.min(16, col * 0.34));
         series.forEach(function (s, j) {
           s[0].forEach(function (valor, i) {
@@ -306,16 +322,35 @@
           });
         });
       }
-      svg.setAttribute('aria-label', 'Gráfico de ' + (tipo === 'barras' ? 'barras' : tipo === 'lineas' ? 'líneas' : 'áreas') +
+      svg.setAttribute('aria-label', 'Gráfico de ' + ({ barras: 'barras', apiladas: 'barras apiladas', lineas: 'líneas', areas: 'áreas' })[tipo] +
         ' de lo facturado cada mes en ' + (anio - 1) + ' y en ' + anio);
     }
+    // El botón del tipo de gráfico abre su menú, como en el programa
+    var botonTipo = $('[data-tipo-boton]'), menuTipo = $('[data-tipo-menu]');
+    function menuTipoAbierto(si) { menuTipo.hidden = !si; botonTipo.setAttribute('aria-expanded', si ? 'true' : 'false'); }
+    botonTipo.addEventListener('click', function (e) { e.stopPropagation(); menuTipoAbierto(menuTipo.hidden); });
     $$('[data-tipo]').forEach(function (b) {
       b.addEventListener('click', function () {
         tipo = b.getAttribute('data-tipo');
-        $$('[data-tipo]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+        $$('[data-tipo]').forEach(function (o) { o.setAttribute('aria-checked', o === b ? 'true' : 'false'); });
+        menuTipoAbierto(false);
         grafico(true);
       });
     });
+
+    // El menú Maestros se despliega al pasar el ratón o al pulsarlo
+    var botonMenu = $('[data-menu]'), mega = $('#megamenu'), cierre = 0;
+    function megaAbierto(si) { clearTimeout(cierre); mega.classList.toggle('abierto', si); botonMenu.setAttribute('aria-expanded', si ? 'true' : 'false'); }
+    botonMenu.addEventListener('click', function (e) { e.stopPropagation(); megaAbierto(!mega.classList.contains('abierto')); });
+    [botonMenu, mega].forEach(function (el) {
+      el.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') megaAbierto(true); });
+      el.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') cierre = setTimeout(function () { megaAbierto(false); }, 220); });
+    });
+    document.addEventListener('click', function (e) {
+      if (!mega.contains(e.target)) megaAbierto(false);
+      if (!menuTipo.contains(e.target)) menuTipoAbierto(false);
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { megaAbierto(false); menuTipoAbierto(false); } });
     var esperaTamano = 0;
     if ('ResizeObserver' in window) {
       new ResizeObserver(function () {
@@ -329,11 +364,28 @@
       var f = new Date(hoy.getTime() - diasAtras * 864e5);
       return { texto: dos(f.getDate()) + '/' + dos(f.getMonth() + 1) + '/' + f.getFullYear(), anio: f.getFullYear() };
     }
+    var SEMANA = [[1, 'Cobro', 'Distribuciones Levante S. L.', 1820.40], [2, 'Pago', 'Suministros Industriales del Este', 645.00],
+      [3, 'Cobro', 'Electro Hogar Sur', 418.25], [4, 'Cobro', 'Talleres Mediterráneo', 2310.00], [5, 'Pago', 'Papelería Central', 96.80], [6, 'Cobro', 'Panadería La Espiga', 389.90]];
+    var PRESUPUESTOS = [['Reformas Palmeral S. L.', 2, 4850.00], ['Cristalería del Centro', 5, 1236.40], ['Asesoría Romero y Asociados', 8, 720.00],
+      ['Electro Hogar Sur', 12, 2980.75], ['Talleres Mediterráneo', 15, 615.30], ['Distribuciones Levante S. L.', 21, 9420.00]];
+    var STOCK = [[1043, 'Papel A4 80 g (caja 5 paquetes)', 3, 10], [2210, 'Tóner impresora láser negro', 1, 4], [3105, 'Rollo térmico 80 mm', 12, 40],
+      [4012, 'Etiquetas adhesivas 70×37', 2, 6], [5120, 'Archivador de palanca A4', 4, 12], [6008, 'Bolígrafo azul (caja 50)', 1, 3]];
     function listas() {
       var k = conIva ? 1.21 : 1;
+      $('[data-tabla="semana"] tbody').innerHTML = SEMANA.map(function (r) {
+        var f = fecha(-r[0]);
+        return '<tr' + (r[1] === 'Pago' ? ' class="rojo"' : '') + '><td class="ocultable">' + f.texto + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td class="num">' + num(r[3], 2) + '</td></tr>';
+      }).join('');
+      $('[data-tabla="presupuestos"] tbody').innerHTML = PRESUPUESTOS.map(function (r, i) {
+        var f = fecha(r[1]);
+        return '<tr><td>PRE-' + (342 - i * 3) + '</td><td class="ocultable">' + f.texto + '</td><td>' + r[0] + '</td><td class="num">' + num(r[2] * k, 2) + '</td><td class="num">' + r[1] + '</td></tr>';
+      }).join('');
+      $('[data-tabla="stock"] tbody').innerHTML = STOCK.map(function (r) {
+        return '<tr><td class="num">' + r[0] + '</td><td>' + r[1] + '</td><td class="num">' + r[2] + '</td><td class="num">' + r[3] + '</td></tr>';
+      }).join('');
       $('[data-tabla="vencidos"] tbody').innerHTML = VENCIDOS.map(function (r, i) {
         var f = fecha(r[1]);
-        return '<tr' + (r[1] > 90 ? ' class="rojo"' : '') + '><td>' + r[0] + '</td><td>F' + String(f.anio).slice(2) + '-' + (187 + i * 23) +
+        return '<tr' + (r[1] > 90 ? ' class="rojo"' : '') + '><td>' + r[0] + '</td><td>FAC-' + (87 + i * 13) +
           '</td><td class="ocultable">' + f.texto + '</td><td class="num">' + r[1] + '</td><td class="num">' + num(r[2], 2) + '</td></tr>';
       }).join('');
       $('[data-tabla="clientes"] tbody').innerHTML = MEJORES.map(function (r) {
@@ -347,6 +399,10 @@
         $$('[data-lista]').forEach(function (o) { o.setAttribute('aria-selected', o === b ? 'true' : 'false'); });
         $$('[data-tabla]').forEach(function (t) { t.hidden = t.getAttribute('data-tabla') !== cual; });
       });
+    });
+    var tiraPestanas = $('.listas-pestanas');
+    $$('[data-desplazar]').forEach(function (b) {
+      b.addEventListener('click', function () { tiraPestanas.scrollBy({ left: +b.getAttribute('data-desplazar') * 140, behavior: quieto ? 'auto' : 'smooth' }); });
     });
 
     // «Importes con IVA» y el botón de actualizar
