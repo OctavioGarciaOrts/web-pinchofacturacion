@@ -19,15 +19,15 @@
     });
   }
 
-  // Interruptor claro / oscuro de la captura de la portada
+  // Interruptor claro / oscuro de la pantalla de Inicio de la portada
   var botonesTema = document.querySelectorAll('.interruptor button');
-  var imagenesTema = document.querySelectorAll('.escaparate .ventana img');
+  var pantallaInicio = document.getElementById('app');
   function ponerTema(tema) {
     botonesTema.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.tema === tema ? 'true' : 'false'); });
-    imagenesTema.forEach(function (img) { img.classList.toggle('apagada', img.dataset.tema !== tema); });
+    if (pantallaInicio) pantallaInicio.dataset.tema = tema;
   }
   botonesTema.forEach(function (b) { b.addEventListener('click', function () { ponerTema(b.dataset.tema); }); });
-  // Si el visitante usa el modo oscuro, la captura empieza en oscuro
+  // Si el visitante usa el modo oscuro, la pantalla empieza en oscuro
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ponerTema('oscuro');
 
   // Pestañas de pantallas (también con las flechas del teclado)
