@@ -101,6 +101,7 @@ p { margin: 0 0 1em; }
 
 .escaparate { margin-top: 56px; }
 .escaparate-cabecera { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 14px; }
+.escaparate-cabecera .en-directo { margin-right: auto; }
 .en-directo { margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: .95rem; font-weight: 500; color: var(--texto-2); }
 .en-directo .punto { position: relative; width: 10px; height: 10px; border-radius: 50%; background: var(--naranja); }
 .en-directo .punto::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--naranja); animation: latido 2s ease-out infinite; }
@@ -145,6 +146,42 @@ p { margin: 0 0 1em; }
 .app-lateral img { width: 30px; height: auto; }
 .app-lateral .lat-logo { width: 46px; margin-bottom: 4px; }
 .app-lateral .lat-salir { width: 32px; margin-top: auto; }
+
+/* Menú lateral (el programa deja elegir menú arriba o a la izquierda): la barra de iconos pasa a la derecha */
+.app-menulat { display: none; }
+.app[data-menu="lateral"] { grid-template-columns: 214px minmax(0, 1fr) 56px; }
+.app[data-menu="lateral"] .app-menulat { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; gap: 7px; padding: 10px 8px 12px; min-width: 0; animation: lateral-entra .45s cubic-bezier(.2, .8, .2, 1) both; }
+.app[data-menu="lateral"] .app-principal { grid-column: 2; grid-row: 1; }
+.app[data-menu="lateral"] .app-lateral { grid-column: 3; grid-row: 1; border-right: 0; border-left: 1px solid rgba(255,255,255,.08); background: none; padding-top: 34px; }
+.app[data-menu="lateral"] .app-lateral .lat-logo, .app[data-menu="lateral"] .app-menu { display: none; }
+.app[data-menu="lateral"] .app-pestanas { height: 38px; }
+.app[data-menu="lateral"] .app-principal { overflow: hidden; }
+.app[data-menu="lateral"] .saludo-extra { display: none; }
+.app[data-menu="lateral"] .atajo { width: 76px; }
+@keyframes lateral-entra { from { opacity: 0; transform: translateX(-24px); } }
+.menulat-marca { display: flex; align-items: center; gap: 6px; padding: 0 2px 2px; }
+.menulat-marca img { width: 46px; height: 46px; flex: none; }
+.menulat-marca span { display: flex; flex-direction: column; font: 400 17px/1.05 "Segoe UI", system-ui, sans-serif; color: #fff; }
+.menulat-marca b { font-weight: 400; font-size: 21px; color: #cfe1ff; -webkit-text-stroke: .4px #fff; text-shadow: 0 0 1px #1d4e9a, 0 1px 0 #1d4e9a; }
+.menulat-buscar { display: flex; align-items: center; justify-content: space-between; height: 24px; padding: 0 7px; margin-bottom: 4px; border-radius: 3px; background: #fff; color: #8a93a3; font-size: 11px; }
+.menulat-buscar svg { width: 13px; height: 13px; fill: none; stroke: #4a5160; stroke-width: 2.2; stroke-linecap: round; }
+.menulat-grupo { border-radius: 6px; background: rgba(10, 24, 48, .55); border: 1px solid transparent; box-shadow: inset 3px 0 0 #2f80d1; overflow: hidden; transition: border-color .2s ease, background .2s ease; }
+.menulat-grupo > button { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 8px 10px 8px 14px; border: 0; background: none; color: #fff;
+  font: 600 13px/1.2 "Segoe UI", system-ui, sans-serif; text-transform: uppercase; letter-spacing: .02em; text-align: left; cursor: pointer; }
+.app .menulat-grupo > button { font: 600 13px/1.2 "Segoe UI", system-ui, sans-serif; }
+.menulat-grupo > button::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid rgba(255,255,255,.8); border-bottom: 1.5px solid rgba(255,255,255,.8); transform: translateY(-2px) rotate(45deg); transition: transform .25s ease; }
+.menulat-grupo > button:hover { background: rgba(255,255,255,.07); }
+.menulat-grupo.abierto { border-color: rgba(90, 160, 255, .6); background: rgba(22, 50, 92, .6); }
+.menulat-grupo.abierto > button { border-bottom: 1px solid rgba(255,255,255,.12); }
+.menulat-grupo.abierto > button::after { transform: translateY(2px) rotate(-135deg); }
+.menulat-items { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+.menulat-grupo.abierto .menulat-items { grid-template-rows: 1fr; }
+.menulat-items ul { list-style: none; margin: 0; padding: 0; min-height: 0; overflow: hidden; }
+.menulat-items li { display: flex; align-items: center; gap: 9px; padding: 5px 8px 5px 10px; font-size: 12.5px; line-height: 1.2; color: #fff; cursor: default; }
+.menulat-items li:first-child { padding-top: 8px; }
+.menulat-items li:last-child { padding-bottom: 9px; }
+.menulat-items li:hover { background: rgba(255,255,255,.08); }
+.menulat-items img { width: 24px; height: 24px; object-fit: contain; flex: none; }
 
 /* Menú de arriba con Maestros desplegable */
 .app-principal { min-width: 0; display: flex; flex-direction: column; }
@@ -464,6 +501,16 @@ details p { color: var(--texto-2); max-width: 70ch; padding-bottom: 8px; }
 .legal h1 { color: var(--texto); }
 
 /* ---------- La pantalla en directo en pantallas más pequeñas ---------- */
+/* El menú lateral solo se ofrece donde cabe; en pantallas estrechas se ve el de arriba */
+@media (max-width: 1000px) {
+  .interruptor-menu { display: none; }
+  .app[data-menu="lateral"] .app-menulat { display: none; }
+  .app[data-menu="lateral"] { grid-template-columns: 62px minmax(0, 1fr); }
+  .app[data-menu="lateral"] .app-lateral { grid-column: 1; border-left: 0; border-right: 1px solid rgba(255,255,255,.08); padding-top: 10px; }
+  .app[data-menu="lateral"] .app-principal { grid-column: 2; }
+  .app[data-menu="lateral"] .app-lateral .lat-logo { display: block; }
+  .app[data-menu="lateral"] .app-menu { display: flex; }
+}
 @media (max-width: 1140px) {
   .saludo-extra { display: none; }
   .atajo { width: 76px; }
@@ -551,6 +598,8 @@ details p { color: var(--texto-2); max-width: 70ch; padding-bottom: 8px; }
   .lista .pct i { animation: none; }
   .atajo::after { display: none; }
   .megamenu { transition: none; }
+  .app-menulat { animation: none !important; }
+  .menulat-items { transition: none; }
   .pasos::before, .pasos li::before { transition: none; }
   .pasos.visto li::before { animation: none; }
 }

@@ -85,9 +85,16 @@
             <button type="button" data-tema="oscuro" aria-pressed="false">Oscuro</button>
           </span>
         </div>
+        <div class="interruptor interruptor-menu" role="group" aria-label="Menú del programa">
+          <span>Menú</span>
+          <span class="interruptor-botones">
+            <button type="button" data-menu-modo="arriba" aria-pressed="true">Arriba</button>
+            <button type="button" data-menu-modo="lateral" aria-pressed="false">Lateral</button>
+          </span>
+        </div>
       </div>
 
-      <figure class="app" id="app" data-tema="claro" aria-label="Recreación de la pantalla de inicio de Pincho Facturación con datos de ejemplo">
+      <figure class="app" id="app" data-tema="claro" data-menu="arriba" aria-label="Recreación de la pantalla de inicio de Pincho Facturación con datos de ejemplo">
         <canvas class="fondo-vivo" data-fondo="programa" aria-hidden="true"></canvas>
         <div class="app-lateral" aria-hidden="true">
           <img class="lat-logo" src="img/logo-180.webp" alt="">
@@ -99,6 +106,17 @@
           <img src="img/programa/lateral-agenda.webp" alt="">
           <img class="lat-salir" src="img/programa/lateral-salir.webp" alt="">
         </div>
+        <!-- Menú lateral: el programa permite llevar el menú arriba o a la izquierda -->
+        <nav class="app-menulat" aria-label="Menú lateral del programa">
+          <div class="menulat-marca"><img src="img/logo-128.webp" alt=""><span>Pincho<b>Facturación</b></span></div>
+          <div class="menulat-buscar" aria-hidden="true"><span>Buscar en el menú…</span><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></div>
+          <div class="menulat-grupo"><button type="button" aria-expanded="false">Maestros</button><div class="menulat-items"><ul><li><img src="img/programa/menu-clientes.webp" alt="">Clientes</li><li><img src="img/programa/menu-proveedores.webp" alt="">Proveedores</li><li><img src="img/programa/menu-articulos.webp" alt="">Artículos</li><li><img src="img/programa/menu-familias.webp" alt="">Familias</li><li><img src="img/programa/menu-formas-pago.webp" alt="">Formas de pago</li><li><img src="img/programa/menu-bancos.webp" alt="">Bancos</li></ul></div></div>
+          <div class="menulat-grupo abierto"><button type="button" aria-expanded="true">Almacén</button><div class="menulat-items"><ul><li><img src="img/programa/menu-almacen-movimientos.webp" alt="">Movimientos Almacén</li><li><img src="img/programa/menu-almacen-stock.webp" alt="">Resumen Stock Actual</li><li><img src="img/programa/menu-almacen-seguimientos.webp" alt="">Seguimientos por Artículo</li><li><img src="img/programa/menu-almacen-entradas.webp" alt="">Seguimiento Entradas y Salidas</li></ul></div></div>
+          <div class="menulat-grupo"><button type="button" aria-expanded="false">Facturación</button></div>
+          <div class="menulat-grupo"><button type="button" aria-expanded="false">Compras</button></div>
+          <div class="menulat-grupo"><button type="button" aria-expanded="false">Tesorería</button></div>
+          <div class="menulat-grupo"><button type="button" aria-expanded="false">Utilidades</button></div>
+        </nav>
         <div class="app-principal">
           <div class="app-menu">
             <div class="menu-sup">
@@ -192,7 +210,7 @@
           </div>
         </div>
       </figure>
-      <p class="pie-captura">Recreación en directo de la pantalla de inicio, con el mismo fondo en movimiento que el programa. Abre el menú Maestros, cambia el tipo de gráfico con su botón, pasa por las listas o marca «Importes con IVA». Los datos son de ejemplo.</p>
+      <p class="pie-captura">Recreación en directo de la pantalla de inicio, con el mismo fondo en movimiento que el programa. Cambia entre el menú de arriba y el lateral, abre el menú Maestros, cambia el tipo de gráfico con su botón, pasa por las listas o marca «Importes con IVA». Los datos son de ejemplo.</p>
     </div>
   </div>
 </section>

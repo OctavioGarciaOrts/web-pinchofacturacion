@@ -27,6 +27,24 @@
     if (pantallaInicio) pantallaInicio.dataset.tema = tema;
   }
   botonesTema.forEach(function (b) { b.addEventListener('click', function () { ponerTema(b.dataset.tema); }); });
+  // Menú del programa arriba o a la izquierda, como deja elegir el programa
+  var botonesMenu = document.querySelectorAll('[data-menu-modo]');
+  botonesMenu.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var modo = b.getAttribute('data-menu-modo');
+      botonesMenu.forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
+      if (pantallaInicio) pantallaInicio.dataset.menu = modo;
+    });
+  });
+  // Grupos del menú lateral: se abre uno y se cierran los demás
+  var grupos = document.querySelectorAll('.menulat-grupo');
+  grupos.forEach(function (g) {
+    var b = g.querySelector('button');
+    b.addEventListener('click', function () {
+      var abrir = !g.classList.contains('abierto');
+      grupos.forEach(function (o) { o.classList.toggle('abierto', o === g && abrir); o.querySelector('button').setAttribute('aria-expanded', o === g && abrir ? 'true' : 'false'); });
+    });
+  });
   // Si el visitante usa el modo oscuro, la pantalla empieza en oscuro
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ponerTema('oscuro');
 
