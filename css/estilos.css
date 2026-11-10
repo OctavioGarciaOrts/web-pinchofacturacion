@@ -536,6 +536,34 @@ button.menu-op:hover::after, button.menu-op[aria-expanded="true"]::after { trans
   .calendario li::before, .estado.listo::before { animation: none !important; }
 }
 
+/* ---------- Dónde trabajar: red local o nube ---------- */
+.modos { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.modo {
+  position: relative; display: flex; flex-direction: column; padding: 30px 30px 26px; border-radius: 16px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025)); border: 1px solid var(--linea);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: transform .6s cubic-bezier(.2, .8, .2, 1), opacity .6s ease;
+}
+.modo-nube { border-color: rgba(242, 159, 46, .35); transition-delay: .12s; }
+.modo-nube::before { content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(242, 159, 46, .18), transparent 70%); pointer-events: none; }
+.js .modo:not(.visto) { opacity: 0; transform: translateY(26px); }
+.modo-icono { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 16px; margin-bottom: 18px; color: #8cc2ff; background: rgba(56, 140, 235, .14); border: 1.5px solid rgba(56, 140, 235, .5); }
+.modo-nube .modo-icono { color: #ffc77a; background: rgba(242, 159, 46, .14); border-color: rgba(242, 159, 46, .55); }
+.modo-icono svg { width: 40px; height: 40px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.modo.visto .modo-icono svg { animation: marca-pop .5s cubic-bezier(.3, 1.6, .5, 1) both .3s; }
+.modo h3 { font-size: 1.6rem; margin: 8px 0 10px; }
+.modo > p { color: var(--texto-2); margin: 0 0 14px; }
+.ventajas { list-style: none; padding: 0; margin: 4px 0 0; }
+.ventajas li { position: relative; padding: 9px 0 9px 30px; border-top: 1px solid var(--linea); }
+.ventajas li::before {
+  content: ""; position: absolute; left: 0; top: 12px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--verde) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/12px no-repeat;
+}
+.modo-nube .ventajas li::before { background-color: var(--naranja); }
+.modo .modo-nota { margin: 18px 0 0; padding: 12px 14px; border-radius: 10px; font-size: .92rem; color: var(--texto); background: rgba(242, 159, 46, .1); border-left: 3px solid var(--naranja); }
+@media (max-width: 860px) { .modos { grid-template-columns: 1fr; } .modo-nube { transition-delay: 0s; } }
+@media (prefers-reduced-motion: reduce) { .modo { transition: none !important; } .modo-icono svg { animation: none !important; } }
+
 /* ---------- Cómo empezar (es una secuencia, por eso va numerada) ---------- */
 .pasos { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; counter-reset: paso; position: relative; }
 .pasos::before { content: ""; position: absolute; top: 22px; left: 23px; right: calc((100% - 96px) / 4 - 23px); height: 2px; background: var(--linea); transform-origin: left center; transition: transform 1.5s cubic-bezier(.45, 0, .25, 1) .15s; }
@@ -558,10 +586,19 @@ button.menu-op:hover::after, button.menu-op[aria-expanded="true"]::after { trans
 .pasos p { color: var(--texto-2); margin: 0; font-size: 1rem; }
 
 /* ---------- Familia Pincho ---------- */
-.familia { display: flex; flex-wrap: wrap; gap: 10px 26px; list-style: none; padding: 0; margin: 0; font-size: 1.1rem; }
-.familia a { color: var(--texto-2); text-underline-offset: 4px; }
-.familia a:hover { color: var(--texto); }
-.familia .actual { font-weight: 600; color: var(--texto); }
+.familia { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; list-style: none; padding: 0; margin: 0; font-size: .98rem; }
+.familia a, .familia .ficha {
+  display: flex; flex-direction: column; align-items: center; gap: 10px; height: 100%; padding: 16px 8px 14px; border-radius: 14px;
+  text-align: center; line-height: 1.2; color: var(--texto-2); text-decoration: none;
+  background: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.1);
+  transition: transform .3s cubic-bezier(.3, 1.5, .5, 1), border-color .25s ease, background-color .25s ease, color .25s ease;
+}
+.familia img { width: 56px; height: 56px; filter: drop-shadow(0 6px 10px rgba(0,0,0,.45)); transition: transform .45s cubic-bezier(.3, 1.5, .5, 1); }
+.familia a:hover, .familia a:focus-visible { color: var(--texto); transform: translateY(-4px); border-color: rgba(242, 159, 46, .55); background-color: rgba(242, 159, 46, .08); }
+.familia a:hover img { transform: rotate(-12deg) scale(1.1); }
+.familia .actual .ficha { color: var(--texto); font-weight: 600; border-color: var(--naranja); background-color: rgba(242, 159, 46, .12); }
+@media (max-width: 1100px) { .familia { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 620px) { .familia { gap: 8px; font-size: .82rem; } .familia a, .familia .ficha { padding: 12px 4px 10px; gap: 7px; } .familia img { width: 44px; height: 44px; } }
 
 /* ---------- Preguntas ---------- */
 .preguntas { max-width: 860px; border-top: 1px solid var(--linea); }
