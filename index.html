@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pincho Facturación · Programa de facturación para Windows</title>
   <meta name="description" content="Pincho Facturación: programa de facturación para Windows con facturas, albaranes, presupuestos, clientes, cobros, compras, almacén e informes, preparado para VERI*FACTU.">
-  <meta name="theme-color" content="#16294f">
+  <meta name="theme-color" content="#0b1a30">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Pincho Facturación">
   <meta property="og:description" content="Facturación y gestión comercial para pymes y autónomos, preparada para VERI*FACTU.">
   <meta property="og:url" content="https://pinchofacturacion.es/">
-  <meta property="og:image" content="https://pinchofacturacion.es/img/capturas/factura-claro-1600.webp">
+  <meta property="og:image" content="https://pinchofacturacion.es/img/og-pincho.jpg">
   <link rel="canonical" href="https://pinchofacturacion.es/">
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -18,6 +18,8 @@
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+<!-- El fondo en movimiento del programa, detrás de toda la página (js/movimiento.js) -->
+<canvas class="fondo-pagina fondo-vivo" data-fondo="pagina" aria-hidden="true"></canvas>
 
 <div class="aviso-desarrollo">
   Pincho Facturación está en desarrollo. Si quieres probarlo antes que nadie, <a href="#contacto">escríbenos</a>.
@@ -26,8 +28,8 @@
 <header class="barra">
   <div class="contenedor">
     <a class="marca" href="#">
-      <img src="img/logo-180.webp" alt="" width="42" height="42">
-      <span>Pincho Facturación</span>
+      <img src="img/logo-128.webp" alt="" width="58" height="58">
+      <span>Pincho <b>Facturación</b></span>
     </a>
     <button class="boton-menu" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="menu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
@@ -35,7 +37,7 @@
     <nav aria-label="Principal">
       <ul class="menu" id="menu">
         <li><a href="#incluye">Qué incluye</a></li>
-        <li><a href="#pantallas">Pantallas</a></li>
+        <li><a href="#pantallas">En marcha</a></li>
         <li><a href="#verifactu">VERI*FACTU</a></li>
         <li><a href="#preguntas">Preguntas</a></li>
         <li><a class="boton boton-principal" href="#contacto">Pedir una demostración</a></li>
@@ -49,12 +51,20 @@
 <!-- ============ PORTADA: el programa tal cual es ============ -->
 <section class="portada">
   <div class="contenedor">
+   <div class="portada-arriba">
+    <div class="portada-logo" data-logo>
+      <span class="halo" aria-hidden="true"></span>
+      <img src="img/logo-512.webp" alt="Logotipo de Pincho Facturación" width="512" height="512" draggable="false">
+      <span class="brillo" aria-hidden="true"></span>
+    </div>
     <div class="portada-texto">
-      <h1>Facturar sin pelearte con el programa</h1>
+      <p class="antetitulo"><span>Pincho</span> Facturación · programa para Windows</p>
+      <h1 data-palabras>Facturar sin pelearte con el programa</h1>
+      <p class="rotativo" aria-hidden="true">Todo en uno: <span class="rotativo-caja"><span data-rotar="facturas|albaranes|presupuestos|clientes|cobros|compras|almacén|VERI*FACTU">facturas</span></span></p>
       <p class="entradilla">Pincho Facturación lleva tus facturas, albaranes, presupuestos, clientes, cobros y compras en un solo programa para Windows. Está pensado para que cualquiera en la oficina lo entienda a la primera, y ya viene preparado para VERI*FACTU.</p>
       <div class="acciones">
         <a class="boton boton-principal" href="#contacto">Pedir una demostración</a>
-        <a class="enlace" href="#pantallas">Ver más pantallas</a>
+        <a class="enlace" href="#pantallas">Ver el programa en marcha</a>
       </div>
       <ul class="garantias">
         <li>Preparado para VERI*FACTU</li>
@@ -62,6 +72,7 @@
         <li>Hablas directamente con quien lo programa</li>
       </ul>
     </div>
+   </div>
 
     <!-- La pantalla de Inicio del programa, en directo: fondo en movimiento, reloj, tarjetas y gráfico (js/movimiento.js) -->
     <div class="escaparate">
@@ -212,66 +223,32 @@
   </div>
 </section>
 
-<!-- ============ PANTALLAS REALES ============ -->
-<section class="seccion seccion-niebla" id="pantallas">
+<!-- ============ PANTALLAS: escenas de vídeo (js/escenas.js) ============ -->
+<section class="seccion" id="pantallas">
   <div class="contenedor">
     <div class="cabecera">
-      <h2>Pantallas del programa</h2>
-      <p class="entradilla">Así es Pincho Facturación por dentro. Pulsa en una imagen para verla a tamaño completo.</p>
+      <h2>El programa, en marcha</h2>
+      <p class="entradilla">Un vistazo rápido a las pantallas de Pincho Facturación. Si quieres verlo con calma y con tus propios datos, te lo enseñamos en una demostración.</p>
     </div>
 
-    <div class="pestanas" role="tablist" aria-label="Pantallas">
-      <button class="pestana" role="tab" id="t-mantenimientos" aria-selected="true" aria-controls="p-mantenimientos">Mantenimientos</button>
-      <button class="pestana" role="tab" id="t-factura" aria-selected="false" aria-controls="p-factura" tabindex="-1">Una factura</button>
-      <button class="pestana" role="tab" id="t-facturas" aria-selected="false" aria-controls="p-facturas" tabindex="-1">Lista de facturas</button>
-      <button class="pestana" role="tab" id="t-oscuro" aria-selected="false" aria-controls="p-oscuro" tabindex="-1">Tema oscuro</button>
-    </div>
-
-    <figure class="panel activo" id="p-mantenimientos" role="tabpanel" aria-labelledby="t-mantenimientos">
-      <a class="ventana" href="img/capturas/mantenimientos-2400.webp" target="_blank" rel="noopener">
-        <img src="img/capturas/mantenimientos-1600.webp" srcset="img/capturas/mantenimientos-960.webp 960w, img/capturas/mantenimientos-1600.webp 1600w" sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="807" loading="lazy"
-             alt="Pantalla de Grupos de proveedores: barra lateral, menú de arriba, pestañas abiertas y la rejilla con su buscador y botones">
-      </a>
-      <figcaption>
-        <h3>Todas las tablas, igual de fáciles</h3>
-        <p>Clientes, proveedores, artículos, formas de pago, series… Cada pantalla se abre en su pestaña y todas funcionan igual: escribes en la rejilla para buscar, ordenas y filtras cualquier columna, imprimes o pasas a Excel, y das de alta o de baja desde abajo.</p>
+    <figure class="cine" data-escenas>
+      <div class="cine-marco">
+        <canvas class="cine-lienzo" role="img" aria-label="Escenas del programa: una factura, la lista de facturas, las tablas de mantenimiento y la ventana Acerca de"></canvas>
+        <div class="cine-velo" aria-hidden="true"></div>
+        <p class="cine-titulo" aria-hidden="true"><span class="cine-num">01</span><span class="cine-texto">Una factura, de principio a fin</span></p>
+        <div class="cine-progreso" aria-hidden="true"></div>
+        <button class="cine-pausa" type="button" aria-label="Pausar las escenas" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pausa" d="M8 5v14M16 5v14"/><path class="i-play" d="M8 5l11 7-11 7z"/></svg>
+        </button>
+      </div>
+      <figcaption class="cine-pie">
+        <div><b>Una factura</b><span>Cliente, forma de pago, líneas y total, todo a la vista.</span></div>
+        <div><b>Lista de facturas</b><span>Busca, filtra y ve el estado de cada factura con su color.</span></div>
+        <div><b>Mantenimientos</b><span>Todas las tablas funcionan igual: escribes en la rejilla y encuentras.</span></div>
       </figcaption>
     </figure>
 
-    <figure class="panel" id="p-factura" role="tabpanel" aria-labelledby="t-factura" hidden>
-      <a class="ventana" href="img/capturas/factura-claro-2400.webp" target="_blank" rel="noopener">
-        <img src="img/capturas/factura-claro-1600.webp" srcset="img/capturas/factura-claro-960.webp 960w, img/capturas/factura-claro-1600.webp 1600w" sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860" loading="lazy"
-             alt="Pantalla de una factura en borrador en Pincho Facturación: cliente, forma de pago, líneas y total a pagar">
-      </a>
-      <figcaption>
-        <h3>Una factura, de principio a fin</h3>
-        <p>Mientras es un borrador la puedes cambiar cuanto quieras. Al emitirla recibe su número, su código QR y su huella de VERI*FACTU, y queda lista para imprimir o enviar por correo.</p>
-      </figcaption>
-    </figure>
-
-    <figure class="panel" id="p-facturas" role="tabpanel" aria-labelledby="t-facturas" hidden>
-      <a class="ventana" href="img/capturas/facturas-2400.webp" target="_blank" rel="noopener">
-        <img src="img/capturas/facturas-1600.webp" srcset="img/capturas/facturas-960.webp 960w, img/capturas/facturas-1600.webp 1600w" sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860" loading="lazy"
-             alt="Lista de facturas del ejercicio con borradores, facturas emitidas, rectificativas y sustituidas">
-      </a>
-      <figcaption>
-        <h3>Todas las facturas del año</h3>
-        <p>Borradores, facturas emitidas, rectificativas y sustituidas, cada una con su color. Busca por número, cliente o estado, filtra cualquier columna y emite o rectifica desde la misma pantalla.</p>
-      </figcaption>
-    </figure>
-
-    <figure class="panel" id="p-oscuro" role="tabpanel" aria-labelledby="t-oscuro" hidden>
-      <a class="ventana" href="img/capturas/factura-oscuro-2400.webp" target="_blank" rel="noopener">
-        <img src="img/capturas/factura-oscuro-1600.webp" srcset="img/capturas/factura-oscuro-960.webp 960w, img/capturas/factura-oscuro-1600.webp 1600w" sizes="(max-width: 1200px) 100vw, 1152px" width="1600" height="860" loading="lazy"
-             alt="Ficha de una factura con el tema oscuro">
-      </a>
-      <figcaption>
-        <h3>Claro u oscuro, a tu gusto</h3>
-        <p>Cada usuario elige el aspecto y los colores del programa. El tema oscuro cansa menos la vista cuando pasas muchas horas delante de la pantalla.</p>
-      </figcaption>
-    </figure>
-
-    <p class="nota">Capturas reales del programa. Los nombres, NIF y cuentas son de ejemplo.</p>
+    <p class="nota">Imágenes reales del programa con nombres, NIF y cuentas de ejemplo.</p>
   </div>
 </section>
 
@@ -359,7 +336,6 @@
 
 <!-- ============ CONTACTO ============ -->
 <section class="seccion contacto" id="contacto">
-  <canvas class="fondo-vivo" data-fondo="contacto" aria-hidden="true"></canvas>
   <div class="contenedor dos-columnas">
     <div>
       <h2>¿Lo vemos juntos?</h2>
@@ -403,5 +379,6 @@
 
 <script src="js/principal.js"></script>
 <script src="js/movimiento.js"></script>
+<script src="js/escenas.js"></script>
 </body>
 </html>

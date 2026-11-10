@@ -30,27 +30,6 @@
   // Si el visitante usa el modo oscuro, la pantalla empieza en oscuro
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ponerTema('oscuro');
 
-  // Pestañas de pantallas (también con las flechas del teclado)
-  var pestanas = Array.prototype.slice.call(document.querySelectorAll('.pestana'));
-  function activar(p) {
-    pestanas.forEach(function (q) {
-      var sel = q === p;
-      q.setAttribute('aria-selected', sel ? 'true' : 'false');
-      q.tabIndex = sel ? 0 : -1;
-      var panel = document.getElementById(q.getAttribute('aria-controls'));
-      if (panel) { panel.classList.toggle('activo', sel); panel.hidden = !sel; }
-    });
-  }
-  pestanas.forEach(function (p, i) {
-    p.addEventListener('click', function () { activar(p); });
-    p.addEventListener('keydown', function (e) {
-      var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
-      if (j === null) return;
-      var otra = pestanas[(j + pestanas.length) % pestanas.length];
-      activar(otra); otra.focus(); e.preventDefault();
-    });
-  });
-
   // Formulario de contacto: abre el programa de correo con el mensaje ya escrito
   var formulario = document.getElementById('formulario-contacto');
   if (formulario) {

@@ -59,6 +59,16 @@
         { c: AMBAR, alfa: 40, r: 220, fx: 0.27, fy: 0.19, d: 4.0, cx: 0.55, cy: 0.06, ax: 320, ay: 30 }
       ],
       motas: 48
+    },
+    // Detrás de toda la página: las luces se reparten por la pantalla, se mueven un poco al bajar
+    // y una de ellas sigue al ratón con calma
+    pagina: {
+      luces: [
+        { c: MARCA, alfa: 150, r: 340, fx: 0.21, fy: 0.17, d: 0.0, cx: 0.14, cy: 0.16, ax: 140, ay: 70 },
+        { c: FRIA, alfa: 95, r: 380, fx: 0.15, fy: 0.23, d: 2.1, cx: 0.86, cy: 0.78, ax: 130, ay: 70 },
+        { c: AMBAR, alfa: 42, r: 260, fx: 0.27, fy: 0.19, d: 4.0, cx: 0.55, cy: 0.05, ax: 360, ay: 40 }
+      ],
+      motas: 70, relativo: true, dprMax: 1, raton: true, scroll: true
     }
   };
   var ONDAS = [
@@ -70,14 +80,22 @@
   function FondoVivo(canvas, ajustes) {
     var ctx = canvas.getContext && canvas.getContext('2d');
     if (!ctx) return;
-    var luces = ajustes.luces, motas = ajustes.motas;
-    var w = 0, h = 0, dpr = 1, t = 8, ultimo = 0, visible = !hayIO, pedido = 0, degradado = null;
+    var luces = ajustes.luces, motas = ajustes.motas, nMotas = motas;
+    var w = 0, h = 0, dpr = 1, t = 8, ultimo = 0, visible = !hayIO, pedido = 0, degradado = null, esc = 1;
+    // Luz que sigue al ratón (solo en el fondo de la página) y desplazamiento al bajar
+    var raton = null, luzRaton = null, bajado = 0;
+    if (ajustes.raton && window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+      window.addEventListener('pointermove', function (e) { raton = [e.clientX, e.clientY]; if (!luzRaton) luzRaton = raton.slice(); }, { passive: true });
+    }
+    if (ajustes.scroll) window.addEventListener('scroll', function () { bajado = window.scrollY || 0; if (quieto) pintar(); }, { passive: true });
 
     function medir() {
       var r = canvas.getBoundingClientRect();
       w = Math.max(1, Math.round(r.width));
       h = Math.max(1, Math.round(r.height));
-      dpr = Math.min(window.devicePixelRatio || 1, w > 900 ? 1.5 : 2);
+      dpr = Math.min(window.devicePixelRatio || 1, ajustes.dprMax || (w > 900 ? 1.5 : 2));
+      esc = ajustes.relativo ? Math.max(0.75, Math.max(w, h) / 1300) : 1;
+      nMotas = ajustes.relativo && w < 700 ? Math.round(motas * 0.6) : motas;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       // Degradado a 35 grados, del tinte al oscuro (como el LinearGradientBrush del programa)
@@ -95,21 +113,31 @@
       ctx.fillStyle = degradado;
       ctx.fillRect(0, 0, w, h);
 
-      for (i = 0; i < luces.length; i++) {
-        var l = luces[i];
-        var x = w * l.cx + l.ax * Math.sin(s * l.fx + l.d), y = h * l.cy + l.ay * Math.cos(s * l.fy + l.d * 1.3);
-        var g = ctx.createRadialGradient(x, y, 0, x, y, l.r);
-        g.addColorStop(0, rgba(l.c, (l.alfa / 255).toFixed(3)));
-        g.addColorStop(1, rgba(l.c, 0));
+      var giro = ajustes.scroll ? bajado / 700 : 0;
+      function luz(c, alfa, r, x, y) {
+        var g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, rgba(c, (alfa / 255).toFixed(3)));
+        g.addColorStop(1, rgba(c, 0));
         ctx.fillStyle = g;
-        ctx.fillRect(x - l.r, y - l.r, l.r * 2, l.r * 2);
+        ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      }
+      for (i = 0; i < luces.length; i++) {
+        var l = luces[i], r = l.r * esc;
+        var x = w * l.cx + l.ax * esc * Math.sin(s * l.fx + l.d) + (giro ? Math.sin(giro + i * 2.1) * w * 0.12 : 0);
+        var y = h * l.cy + l.ay * esc * Math.cos(s * l.fy + l.d * 1.3) + (giro ? Math.cos(giro * 0.8 + i * 1.7) * h * 0.1 : 0);
+        luz(l.c, l.alfa, r, x, y);
+      }
+      if (luzRaton) {
+        luzRaton[0] += (raton[0] - luzRaton[0]) * 0.06;
+        luzRaton[1] += (raton[1] - luzRaton[1]) * 0.06;
+        luz(FRIA, 70, 230 * esc, luzRaton[0], luzRaton[1]);
       }
 
       for (i = 0; i < ONDAS.length; i++) {
         var o = ONDAS[i], puntos = [];
         for (var px = -8; px <= w + 8; px += 8) {
           var u = px / 100;
-          var yy = Math.sin(u / o[4] * 2 + s * o[3] + o[5]) * 0.7 + Math.sin(u / o[4] * 3.7 - s * o[3] * 0.6 + o[5] * 2) * 0.3;
+          var yy = Math.sin(u / o[4] * 2 + s * o[3] + o[5] + giro * 3) * 0.7 + Math.sin(u / o[4] * 3.7 - s * o[3] * 0.6 + o[5] * 2) * 0.3;
           puntos.push(px, h * o[1] + yy * o[2]);
         }
         ctx.beginPath();
@@ -127,7 +155,7 @@
       }
 
       // Motas: suben despacio balanceándose y se desvanecen
-      for (i = 0; i < motas; i++) {
+      for (i = 0; i < nMotas; i++) {
         var vel = 0.035 + (i * 37 % 11) / 220, av = (s * vel + i * 0.137) % 1;
         var mx = w * ((i * 0.618034) % 1) + 10 * Math.sin(s * 0.9 + i), my = h - av * h;
         var tam = (1.5 + i % 4 * 0.9) * 1.15, al = Math.sin(av * Math.PI) * (i % 3 === 0 ? 110 : 70) / 255;
@@ -167,6 +195,53 @@
   Array.prototype.forEach.call(document.querySelectorAll('canvas.fondo-vivo'), function (c) {
     FondoVivo(c, FONDOS[c.getAttribute('data-fondo')] || FONDOS.programa);
   });
+
+  // ---------- Portada: titular palabra a palabra, palabras que cambian y logo que se inclina ----------
+  var titular = document.querySelector('[data-palabras]');
+  if (titular && !quieto) {
+    titular.setAttribute('aria-label', titular.textContent);
+    titular.innerHTML = titular.textContent.trim().split(/\s+/).map(function (p, i) {
+      return '<span class="palabra" aria-hidden="true"><span style="--i:' + i + '">' + p + '</span></span>';
+    }).join(' ');
+  }
+  var rotar = document.querySelector('[data-rotar]');
+  if (rotar && !quieto) {
+    var palabras = rotar.getAttribute('data-rotar').split('|'), nPal = 0;
+    var letras = function (p) {
+      return p.split('').map(function (c, i) { return '<i style="--l:' + i + '">' + (c === ' ' ? '&nbsp;' : c) + '</i>'; }).join('');
+    };
+    rotar.innerHTML = letras(palabras[0]);
+    setTimeout(function cambiar() {
+      if (!document.hidden) {
+        rotar.className = 'sale';
+        setTimeout(function () {
+          nPal = (nPal + 1) % palabras.length;
+          rotar.innerHTML = letras(palabras[nPal]);
+          rotar.className = 'entra';
+        }, 300 + palabras[nPal].length * 20);
+      }
+      setTimeout(cambiar, 2300);
+    }, 3200);
+  }
+  var logo = document.querySelector('[data-logo]');
+  if (logo) {
+    // Al pulsarlo da una vuelta
+    logo.addEventListener('click', function () {
+      if (quieto) return;
+      logo.classList.remove('gira'); void logo.offsetWidth; logo.classList.add('gira');
+    });
+    logo.addEventListener('animationend', function (e) { if (e.animationName === 'logo-gira') logo.classList.remove('gira'); });
+    // Con el ratón se inclina hacia él, como una moneda que se mira de lado
+    if (!quieto && window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+      var portada = document.querySelector('.portada') || document.body;
+      portada.addEventListener('pointermove', function (e) {
+        var r = logo.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / window.innerWidth, dy = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
+        logo.style.transform = 'perspective(900px) rotateY(' + (dx * 28).toFixed(2) + 'deg) rotateX(' + (-dy * 22).toFixed(2) + 'deg)';
+      });
+      portada.addEventListener('pointerleave', function () { logo.style.transform = ''; });
+    }
+  }
 
   // ---------- La pantalla de Inicio en directo ----------
   var app = document.getElementById('app');
