@@ -489,9 +489,9 @@ button.menu-op:hover::after, button.menu-op[aria-expanded="true"]::after { trans
 
 /* Calendario: una línea que se dibuja y puntos que se encienden */
 .calendario {
-  list-style: none; padding: 0; margin: 64px 0 0; display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; position: relative;
+  list-style: none; padding: 0; margin: 64px 0 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; position: relative;
 }
-.calendario::before, .calendario::after { content: ""; position: absolute; top: 9px; left: 9px; right: calc((100% - 72px) / 7 - 11px); height: 2px; border-radius: 2px; }
+.calendario::before, .calendario::after { content: ""; position: absolute; top: 9px; left: 9px; right: calc((100% - 60px) / 6 - 11px); height: 2px; border-radius: 2px; }
 .calendario::before { background: var(--linea); }
 .calendario::after {
   background: linear-gradient(90deg, var(--verde), var(--naranja) 40%, var(--azul-vivo)); transform-origin: left center;
@@ -508,6 +508,7 @@ button.menu-op:hover::after, button.menu-op[aria-expanded="true"]::after { trans
 .calendario.visto li.pasado::before { border-color: var(--verde); background: var(--verde); }
 .calendario.visto li.hoy::before { border-color: var(--naranja); background: var(--naranja); box-shadow: 0 0 0 6px rgba(242, 159, 46, .22), 0 0 22px rgba(242, 159, 46, .7); }
 .calendario li.hoy time { color: var(--naranja); }
+.calendario.visto li.previsto::before { border-style: dashed; border-width: 2.5px; background: #12305c; }
 .calendario li.hoy span { color: var(--texto); }
 .calendario.visto li::before { animation: encender .45s cubic-bezier(.3, 1.6, .5, 1) both; }
 .calendario.visto li:nth-child(1)::before { transition-delay: .1s; animation-delay: .1s; }
