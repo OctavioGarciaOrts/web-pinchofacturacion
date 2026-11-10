@@ -576,8 +576,17 @@ details p { color: var(--texto-2); max-width: 70ch; padding-bottom: 8px; }
 .contacto h2 { color: #fff; margin-bottom: 16px; }
 .contacto .entradilla { color: #c3cde3; }
 .contacto a { color: #fff; }
-.datos-contacto { margin-top: 28px; font-size: 1.05rem; }
-.datos-contacto a { font-weight: 600; }
+.datos-contacto { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 12px; font-size: 1.05rem; }
+.datos-contacto li { display: flex; align-items: center; gap: 16px; }
+.datos-contacto img {
+  width: 52px; height: 52px; flex: none; padding: 7px; border-radius: 14px; box-sizing: border-box;
+  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.95), rgba(214,226,244,.9)); box-shadow: 0 8px 20px -10px rgba(0,0,0,.6);
+  transition: transform .25s cubic-bezier(.3, 1.6, .5, 1);
+}
+.datos-contacto li:hover img { transform: translateY(-2px) rotate(-6deg) scale(1.06); }
+.datos-contacto span { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
+.datos-contacto small { font-size: .8rem; color: var(--texto-2); letter-spacing: .04em; }
+.datos-contacto a { font-weight: 600; overflow-wrap: anywhere; }
 .formulario { display: grid; gap: 16px; }
 .formulario label { display: grid; gap: 6px; font-size: .95rem; color: #c3cde3; }
 .formulario input, .formulario select, .formulario textarea {
