@@ -581,7 +581,10 @@ details p { color: var(--texto-2); max-width: 70ch; padding-bottom: 8px; }
 .datos-contacto li { display: flex; align-items: center; gap: 16px; }
 .datos-contacto img {
   width: 52px; height: 52px; flex: none; padding: 7px; border-radius: 14px; box-sizing: border-box;
-  background: radial-gradient(circle at 50% 40%, rgba(255,255,255,.95), rgba(214,226,244,.9)); box-shadow: 0 8px 20px -10px rgba(0,0,0,.6);
+  background: linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.2);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 20px -12px rgba(0,0,0,.6);
+  filter: drop-shadow(0 0 5px rgba(160, 200, 255, .22));
   transition: transform .25s cubic-bezier(.3, 1.6, .5, 1);
 }
 .datos-contacto li:hover img { transform: translateY(-2px) rotate(-6deg) scale(1.06); }
